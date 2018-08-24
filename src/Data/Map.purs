@@ -55,6 +55,7 @@ import Data.Traversable (traverse, class Traversable)
 import Data.TraversableWithIndex (class TraversableWithIndex, traverseWithIndex)
 import Data.Tuple (Tuple(Tuple), snd, uncurry)
 import Data.Unfoldable (class Unfoldable, unfoldr)
+import Data.Generic (class Generic)
 import Partial.Unsafe (unsafePartial)
 
 -- | `Map k v` represents maps from keys of type `k` to values of type `v`.
@@ -62,6 +63,8 @@ data Map k v
   = Leaf
   | Two (Map k v) k v (Map k v)
   | Three (Map k v) k v (Map k v) k v (Map k v)
+
+derive instance genericMap :: (Generic k, Generic a) => Generic (Map k a)
 
 -- Internal use
 toAscArray :: forall k v. Map k v -> Array (Tuple k v)
